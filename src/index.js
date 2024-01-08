@@ -24,8 +24,9 @@ import {
 } from "./proxy-animation.js";
 
 function initPolyfill() {
-  // Don't load if browser claims support
-  if (CSS.supports("animation-timeline: --works")) {
+  if (typeof CSS.supports !== 'function' ||
+      CSS.supports("animation-timeline: --works") ||
+      typeof WeakRef === 'undefined') {
     return;
   }
 
