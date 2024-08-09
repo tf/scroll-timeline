@@ -848,13 +848,6 @@ function fractionalEndDelay(details) {
 // See ProxyAnimation constructor for details.
 let proxyAnimations = new WeakMap();
 
-// Clear cache containing the ProxyAnimation instances when leaving the page.
-// See https://github.com/flackr/scroll-timeline/issues/146#issuecomment-1698159183
-// for details.
-window.addEventListener('pagehide', (e) => {
-  proxyAnimations = new WeakMap();
-}, false);
-
 // Map from the real underlying native animation to the ProxyAnimation proxy of it.
 let proxiedAnimations = new WeakMap();
 
@@ -1655,7 +1648,7 @@ export class ProxyAnimation {
   get id() {
     return proxyAnimations.get(this).animation.id;
   }
-  
+
   set id(value) {
     proxyAnimations.get(this).animation.id = value;
   }
@@ -1811,7 +1804,7 @@ function parseAnimationRange(value) {
       start: 'normal',
       end: 'normal'
     };
-  
+
   const animationRange = {
     start: { rangeName: 'cover', offset: CSS.percent(0) },
     end: { rangeName: 'cover', offset: CSS.percent(100) },
